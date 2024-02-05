@@ -31,20 +31,62 @@ namespace FountainOfObjects
 
         // Room size can be initialised by the game (small/med/large)
         public int WorldSize { get; init; } = 4;
+        // does the game need to make the fountain 
+        // or should the world make the fountain 
+        private Fountain _fountain;
 
-        public void Display()
+        public World(Fountain fountain)
         {
-            for (int row  = 0; row < WorldSize; row++)
+            _fountain = fountain;
+
+            InitialiseMap();
+        }
+
+        // Who decides what room type a room is
+        // the world
+        // or the room 
+        private void InitialiseMap()
+        {
+            for (int row = 0; row < WorldSize; row++)
             {
                 for (int col = 0; col < WorldSize; col++)
                 {
-                    Console.Write($"({row},{col}) ");
+                    if (row == 0 && col == 0)
+                    {
+                        Map[row, col] = new EntranceRoom(row, col, _fountain);
+                    }
+                    else if (row == 0 && col == 2)
+                    {
+                        Map[row, col] = new FountainRoom(row, col, _fountain);
+                    } else
+                    {
+                        Map[row, col] = new EmptyRoom(row, col);
+                    }
+
                 }
-                Console.WriteLine();
             }
         }
+
+        // Display each room's message
+        public void Display()
+        {
+            for (int row = 0; row < WorldSize; row++)
+            {
+                for (int col = 0; col < WorldSize; col++)
+                {
+                    Map[row, col].DisplayCurrentRoom();
+                    Map[row, col].DisplayRoomMessage();
+                }
+            }
+        }
+
+
+        // need to check if move is off the world's limits?
+
     }
 }
+
+
 
 // should a room be an enum,
 // an interace

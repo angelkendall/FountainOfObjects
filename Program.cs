@@ -4,10 +4,12 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("THE FOUNTAIN OF OBJECTS");
 
-            World board = new World();
-            board.Display();
+            Game game = new Game();
+
+            game.Run();
+
+
         }
     }
 }

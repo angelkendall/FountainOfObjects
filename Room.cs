@@ -6,35 +6,33 @@ using System.Threading.Tasks;
 
 namespace FountainOfObjects
 {
-    public class Room
+    public abstract class Room
     {
         // each room has a type 
-        public RoomType Type { get; init; }
-        private readonly string? _roomMessage;
-        // room needs to know it's own coords in the world map?
+       // private readonly int _row;
+        //private readonly int _col;
+
+
+        // set the row and column for the room in world 
+        // allow the player to get the current room??
+        public int Row { get; init; }
+        public int Column { get; init; }
 
         // each room has possible actions and messages depending on their type 
-
-        public void DisplayMessage()
+        public Room(int row, int column)
         {
-            Console.WriteLine($"You are in room {0}");
+            //Type = roomType;
+            Row = row;
+            Column = column;
         }
 
-        // this won't work because the message might change depending on whether the 
-        // fountain has been activated etc
-/*        private string RoomMessage(RoomType type) => type switch
+        public void DisplayCurrentRoom()
         {
-            RoomType.Entrance => "You are in the entrance",
-            RoomType.Empty => ""
-            _ => throw new ArgumentOutOfRangeException(nameof(type), $"Not expected direction value: {type}"),
-        };*/
+            Console.WriteLine($"You are in the room at (Row={Row}, Column={Column}).");
+        }
+
+        public abstract void DisplayRoomMessage();
+
     }
 
-    public enum RoomType
-    {
-        Empty,
-        Entrance,
-        Fountain,
-        Pit
-    }
 }
