@@ -12,7 +12,7 @@ namespace FountainOfObjects
     {
         private readonly Fountain _fountain;
 
-        public FountainRoom(int row, int col, Fountain fountain) : base (row, col)
+        public FountainRoom(int row, int col, Fountain fountain) : base (row, col, RoomType.Fountain)
         {
             _fountain = fountain;
         }

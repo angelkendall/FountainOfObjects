@@ -9,7 +9,7 @@ namespace FountainOfObjects
 
     // This shouldn't even need to exist? Maybe an abstract method isn't the best way 
     // but a room must display a message, unless its an empty room 
-    public class EmptyRoom(int row, int col) : Room(row, col)
+    public class EmptyRoom(int row, int col) : Room(row, col, RoomType.Empty)
     {
 
         // Empty rooms don't display a message though

@@ -33,7 +33,7 @@ namespace FountainOfObjects
         public int WorldSize { get; init; } = 4;
         // does the game need to make the fountain 
         // or should the world make the fountain 
-        private Fountain _fountain;
+        private readonly Fountain _fountain;
 
         public World(Fountain fountain)
         {
@@ -45,12 +45,16 @@ namespace FountainOfObjects
         // Who decides what room type a room is
         // the world
         // or the room 
+
+        // Place different rooms at specific places,
+        // and make all other rooms empty
         private void InitialiseMap()
         {
             for (int row = 0; row < WorldSize; row++)
             {
                 for (int col = 0; col < WorldSize; col++)
                 {
+
                     if (row == 0 && col == 0)
                     {
                         Map[row, col] = new EntranceRoom(row, col, _fountain);
@@ -58,9 +62,10 @@ namespace FountainOfObjects
                     else if (row == 0 && col == 2)
                     {
                         Map[row, col] = new FountainRoom(row, col, _fountain);
-                    } else
+                    }
+                    else
                     {
-                        Map[row, col] = new EmptyRoom(row, col);
+                        Map[row, col] = new Room(row, col, RoomType.Empty);
                     }
 
                 }
@@ -83,6 +88,12 @@ namespace FountainOfObjects
 
         // need to check if move is off the world's limits?
 
+        // check move 
+
+        private void CheckValidPosition()
+        {
+
+        }
     }
 }
 
