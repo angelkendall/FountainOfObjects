@@ -1,23 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FountainOfObjects
+﻿namespace FountainOfObjects
 {
-    public class EntranceRoom: Room
+    public class EntranceRoom(Fountain fountain) : Room(RoomType.Entrance)
     {
-        // Get the fountain object reference 
-        private readonly Fountain _fountain;
+        private readonly Fountain _fountain = fountain;
 
-
-        public EntranceRoom(int row, int col, Fountain fountain) : base(row, col, RoomType.Entrance)
-        {
-            _fountain = fountain;
-        }
-
-        // Displays one of two messages depending on whether the fountain is activated or not 
         public override void DisplayRoomMessage()
         {
             if (_fountain.State == FountainState.Off)
@@ -29,7 +15,5 @@ namespace FountainOfObjects
                 Console.WriteLine("The Fountain of Objects has been reactivated, and you have escaped with your life!");
             }
         }
-
-        // check if fountain is activated or not 
     }
 }

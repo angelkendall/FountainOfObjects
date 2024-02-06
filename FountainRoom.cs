@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FountainOfObjects
+﻿namespace FountainOfObjects
 {
-
-    // should the fountain live inside the fountain room
-    public class FountainRoom : Room
+    public class FountainRoom(Fountain fountain) : Room(RoomType.Fountain)
     {
-        private readonly Fountain _fountain;
-
-        public FountainRoom(int row, int col, Fountain fountain) : base (row, col, RoomType.Fountain)
-        {
-            _fountain = fountain;
-        }
+        private readonly Fountain _fountain = fountain;
 
         public override void DisplayRoomMessage()
         {
@@ -27,11 +14,6 @@ namespace FountainOfObjects
                 Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
             }
 
-        }
-
-        public void DisplayFountainMessage()
-        {
-            Console.WriteLine($"The fountain is: {_fountain.State}");
         }
     }
 }

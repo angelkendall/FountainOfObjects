@@ -1,46 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FountainOfObjects
+﻿namespace FountainOfObjects
 {
-    public class Player
+    public class Player(Fountain fountain)
     {
-
-        private readonly Fountain _fountain;
-
-        // current position?
-        // current row?
-        // current col
+        private readonly Fountain _fountain = fountain;
 
         // start in entrance
         public int CurrentRow { get; set; } = 0;
         public int CurrentColumn { get; set; } = 0;
-
-        public Player(Fountain fountain) 
-        { 
-            _fountain = fountain;
-        }
-
-        // get player input 
-        // player needs to know what room they're in 
-        // player input is words 
 
         public void ChangeFountainStatus()
         {
             _fountain.State = _fountain.State == FountainState.On ? FountainState.Off : FountainState.On;
         }
 
-        public enum Direction
+        // this should be better
+        public static string GetInput()
         {
-            North,
-            West,
-            South,
-            East
-        }
 
+            Console.Write("What do you want to do? ");
+            string? input = Console.ReadLine();
+
+            if (input == null || input.Any(char.IsDigit))
+            {
+                return "Please enter a valid input.";
+            }
+
+            return input.ToLower();
+        }
 
     }
 }

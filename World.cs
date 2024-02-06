@@ -1,38 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-
-/*
- * The game board is a 4x4 grid 
- * The player can't move off the game board 
- * The game board is never actually displayed to the user
- *  In the future, maybe it can be changed to being displayed as a grid 
- *  
- * How to track the current position in the board 
- * 
- * Different rooms on the board 
- *  Entry room
- *  Fountain room
- *  Future rooms (pit etc)
- *  
- *  
- */
-
-namespace FountainOfObjects
+﻿namespace FountainOfObjects
 {
     public class World
     {
-        // map is a 2D array of (ints)
-        // Maybe this should be a 2D array of rooms
-        public Room[,] Map { get; } = new Room[4, 4];
+        public Room[,] Map { get; } = new Room[WorldSize, WorldSize];
 
-        // Room size can be initialised by the game (small/med/large)
-        public int WorldSize { get; init; } = 4;
-        // does the game need to make the fountain 
-        // or should the world make the fountain 
+        public static int WorldSize { get; } = 4;
+
         private readonly Fountain _fountain;
 
         public World(Fountain fountain)
@@ -41,10 +14,6 @@ namespace FountainOfObjects
 
             InitialiseMap();
         }
-
-        // Who decides what room type a room is
-        // the world
-        // or the room 
 
         // Place different rooms at specific places,
         // and make all other rooms empty
@@ -57,61 +26,31 @@ namespace FountainOfObjects
 
                     if (row == 0 && col == 0)
                     {
-                        Map[row, col] = new EntranceRoom(row, col, _fountain);
+                        Map[row, col] = new EntranceRoom(_fountain);
                     }
                     else if (row == 0 && col == 2)
                     {
-                        Map[row, col] = new FountainRoom(row, col, _fountain);
+                        Map[row, col] = new FountainRoom(_fountain);
                     }
                     else
                     {
-                        Map[row, col] = new Room(row, col, RoomType.Empty);
+                        Map[row, col] = new Room(RoomType.Empty);
                     }
 
                 }
             }
         }
 
-        // Display each room's message
-        public void Display()
+        public static bool CheckMoveInRange(int move)
         {
-            for (int row = 0; row < WorldSize; row++)
+            if (move < 0 || move > WorldSize || move == WorldSize)
             {
-                for (int col = 0; col < WorldSize; col++)
-                {
-                    Map[row, col].DisplayCurrentRoom();
-                    Map[row, col].DisplayRoomMessage();
-                }
+                Console.WriteLine("You are trying to move off the map.\n");
+                return false;
             }
+
+            return true;
         }
 
-
-        // need to check if move is off the world's limits?
-
-        // check move 
-
-        private void CheckValidPosition()
-        {
-
-        }
     }
 }
-
-
-
-// should a room be an enum,
-// an interace
-// a base class
-
-// each room has:
-// a message
-// possible valid actions (move, interact, attack, etc)
-// a coordinate 
-
-/*enum Room
-{
-    Empty,
-    Entrance, 
-    Fountain,
-    Pit
-}*/
